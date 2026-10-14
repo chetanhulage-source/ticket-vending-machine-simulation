@@ -1,0 +1,1030 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RailTicket | Ticket Vending Machine</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: #0866f5;
+    --navy: #071c3b;
+    --light: #f2f7ff;
+    --text: #172b4d;
+    --muted: #64748b;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fc;
+    color: var(--text);
+}
+
+nav {
+    height: 75px;
+    padding: 0 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    box-shadow: 0 2px 15px #0000000c;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.logo span {
+    color: var(--blue);
+}
+
+nav p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+.navlinks {
+    display: flex;
+    gap: 25px;
+}
+
+.navlinks a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.navlinks a:hover {
+    color: var(--blue);
+}
+
+.nav-btn, .btn {
+    border: none;
+    border-radius: 9px;
+    padding: 13px 20px;
+    background: var(--blue);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.hero {
+    background:
+      linear-gradient(90deg, #061b3bea, #08264dcc),
+      url("https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=1800&q=85");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 65px 6%;
+}
+
+.hero-content {
+    max-width: 700px;
+}
+
+.hero h1 {
+    font-size: clamp(36px, 5vw, 62px);
+    line-height: 1.12;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: #27c5ff;
+}
+
+.hero p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #e0edff;
+    max-width: 580px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+}
+
+.btn-outline {
+    border: 1px solid white;
+    color: white;
+    background: transparent;
+}
+
+main {
+    max-width: 1250px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    margin-bottom: 20px;
+    font-size: 27px;
+}
+
+.booking-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e5eaf2;
+    border-radius: 17px;
+    padding: 27px;
+    box-shadow: 0 6px 25px #18355b0a;
+}
+
+.card h2 {
+    font-size: 23px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: var(--muted);
+    margin-bottom: 23px;
+    font-size: 14px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.field label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 9px;
+}
+
+.field select,
+.field input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d7dfeb;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+    background: white;
+}
+
+.field select:focus,
+.field input:focus {
+    border-color: var(--blue);
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.fare-box {
+    margin-top: 24px;
+    padding: 20px;
+    border-radius: 12px;
+    background: var(--light);
+}
+
+.fare-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.fare-amount {
+    color: #078449;
+    font-size: 32px;
+    font-weight: 800;
+    margin-top: 7px;
+}
+
+.fare-details {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-top: 15px;
+}
+
+.btn {
+    width: 100%;
+    margin-top: 18px;
+    font-size: 15px;
+}
+
+.btn:hover, .nav-btn:hover {
+    background: #004ec7;
+}
+
+.btn-light {
+    background: #edf3fb;
+    color: var(--navy);
+}
+
+.btn-light:hover {
+    background: #dce8fa;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 35px 0;
+}
+
+.feature {
+    background: white;
+    border: 1px solid #e5eaf2;
+    padding: 23px 15px;
+    border-radius: 13px;
+    text-align: center;
+}
+
+.feature .emoji {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.feature h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.feature p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.step {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e5eaf2;
+}
+
+.step span {
+    display: inline-flex;
+    width: 35px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--blue);
+    color: white;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.step p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 8px;
+    line-height: 1.6;
+}
+
+#ticketSection, #historySection {
+    display: none;
+    margin-bottom: 35px;
+}
+
+.ticket {
+    border: 2px dashed var(--blue);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 20px;
+}
+
+.ticket-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 17px;
+    border-bottom: 1px solid #e5eaf2;
+}
+
+.status {
+    color: #087443;
+    background: #dcfce7;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    height: fit-content;
+}
+
+.ticket-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.ticket-row span:first-child {
+    color: var(--muted);
+}
+
+.ticket-row span:last-child {
+    font-weight: bold;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.ticket-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.ticket-actions button {
+    width: auto;
+    flex: 1;
+    min-width: 130px;
+}
+
+.history-item {
+    padding: 16px 0;
+    border-bottom: 1px solid #e5eaf2;
+}
+
+.history-item p {
+    line-height: 1.8;
+}
+
+.empty {
+    color: var(--muted);
+    padding: 15px 0;
+}
+
+footer {
+    padding: 35px 6%;
+    background: var(--navy);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+footer p {
+    color: #b8c8df;
+    font-size: 13px;
+    margin-top: 9px;
+}
+
+@media(max-width: 850px) {
+    .booking-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .features, .steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .navlinks {
+        display: none;
+    }
+}
+
+@media(max-width: 500px) {
+    nav {
+        padding: 0 18px;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .nav-btn {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .hero {
+        padding: 45px 22px;
+    }
+
+    main {
+        padding: 0 12px;
+    }
+
+    .card {
+        padding: 20px 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    .features, .steps {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .feature, .step {
+        padding: 15px 10px;
+    }
+
+    .ticket {
+        padding: 15px;
+    }
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #ticketSection, #ticketSection * {
+        visibility: visible;
+    }
+
+    #ticketSection {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 15px;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .ticket {
+        border: 1px dashed #222;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div>
+        <div class="logo">🚆 Rail<span>Ticket</span></div>
+        <p>Ticket Vending Machine</p>
+    </div>
+
+    <div class="navlinks">
+        <a href="#home">Home</a>
+        <a href="#booking">Book Ticket</a>
+        <a href="#historySection" onclick="showHistory()">My Tickets</a>
+        <a href="#about">About</a>
+    </div>
+
+    <button class="nav-btn" onclick="goToBooking()">Book Now</button>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Smart <span>Ticket Vending</span> Machine</h1>
+
+        <p>
+            Book your train ticket easily, quickly and securely.
+            Experience a simple digital ticket booking simulation
+            designed for an academic project.
+        </p>
+
+        <div class="hero-actions">
+            <button class="btn" style="width:auto;margin:0"
+                    onclick="goToBooking()">🎫 Book Ticket →</button>
+
+            <button class="btn btn-outline"
+                    style="width:auto;margin:0"
+                    onclick="showHistory()">▤ View My Tickets</button>
+        </div>
+    </div>
+</section>
+
+<main>
+
+<section id="booking">
+    <h2 class="section-title">Book Your Ticket</h2>
+
+    <div class="booking-layout">
+
+        <div class="card">
+            <h2>🎫 Journey Details</h2>
+            <p class="subtitle">Select your journey to calculate the fare.</p>
+
+            <div class="form-grid">
+                <div class="field">
+                    <label for="source">Source Station</label>
+                    <select id="source" onchange="updateDestination();calculateFare()">
+                        <option>Atpadi</option>
+                        <option>Sangli</option>
+                        <option>Miraj</option>
+                        <option>Kolhapur</option>
+                        <option>Pune</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="destination">Destination Station</label>
+                    <select id="destination" onchange="calculateFare()">
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="date">Date of Journey</label>
+                    <input type="date" id="date">
+                </div>
+
+                <div class="field">
+                    <label for="type">Ticket Type</label>
+                    <select id="type" onchange="calculateFare()">
+                        <option value="1">Ordinary</option>
+                        <option value="1.5">Express</option>
+                        <option value="2">AC Class</option>
+                    </select>
+                </div>
+
+                <div class="field full">
+                    <label for="passengers">Number of Passengers (1–10)</label>
+                    <input type="number" id="passengers"
+                           value="1" min="1" max="10"
+                           oninput="calculateFare()">
+                </div>
+            </div>
+
+            <div class="fare-box">
+                <div class="fare-top">
+                    <div>
+                        <p>Estimated Total Fare</p>
+                        <div class="fare-amount" id="fare">₹200</div>
+                    </div>
+                    <div style="font-size:36px">💳</div>
+                </div>
+
+                <div class="fare-details" id="fareDetails">
+                    Distance: 4 station steps<br>
+                    Base fare: ₹50 per step
+                </div>
+            </div>
+
+            <button class="btn" onclick="makePayment()">
+                💳 Proceed to Simulated Payment →
+            </button>
+
+            <button class="btn btn-light" onclick="resetForm()">
+                Reset Booking
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>✨ Why RailTicket?</h2>
+            <p class="subtitle">A simple smart ticket vending experience.</p>
+
+            <div class="feature" style="margin-bottom:14px;background:#edf5ff">
+                <div class="emoji">🚉</div>
+                <h3>Multiple Stations</h3>
+                <p>Choose from five sample stations.</p>
+            </div>
+
+            <div class="feature" style="margin-bottom:14px;background:#ecfbf3">
+                <div class="emoji">₹</div>
+                <h3>Automatic Fare</h3>
+                <p>Fare updates based on your selection.</p>
+            </div>
+
+            <div class="feature" style="margin-bottom:14px;background:#fff7e8">
+                <div class="emoji">🔐</div>
+                <h3>Payment Simulation</h3>
+                <p>Demonstrate the payment confirmation process.</p>
+            </div>
+
+            <div class="feature" style="background:#f4edff">
+                <div class="emoji">🖨️</div>
+                <h3>Digital Ticket</h3>
+                <p>Generate a unique ticket ID and print it.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature">
+        <div class="emoji">⚡</div>
+        <h3>Fast Booking</h3>
+        <p>Quick and simple booking flow.</p>
+    </div>
+    <div class="feature">
+        <div class="emoji">🛡️</div>
+        <h3>Easy to Use</h3>
+        <p>Simple interface for every user.</p>
+    </div>
+    <div class="feature">
+        <div class="emoji">👥</div>
+        <h3>Multiple Passengers</h3>
+        <p>Book up to 10 passengers at once.</p>
+    </div>
+    <div class="feature">
+        <div class="emoji">🎟️</div>
+        <h3>Print Ticket</h3>
+        <p>Print your generated ticket.</p>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">How It Works</h2>
+
+    <div class="steps">
+        <div class="step">
+            <span>1</span>
+            <h3>Select Journey</h3>
+            <p>Choose source, destination, date and ticket type.</p>
+        </div>
+        <div class="step">
+            <span>2</span>
+            <h3>Calculate Fare</h3>
+            <p>The system calculates the estimated ticket cost.</p>
+        </div>
+        <div class="step">
+            <span>3</span>
+            <h3>Simulate Payment</h3>
+            <p>Confirm the sample payment to continue.</p>
+        </div>
+        <div class="step">
+            <span>4</span>
+            <h3>Get Your Ticket</h3>
+            <p>Generate your ticket and print it.</p>
+        </div>
+    </div>
+</section>
+
+<section id="ticketSection">
+    <div class="card">
+        <div class="ticket-head">
+            <div>
+                <h2>✅ Your Ticket</h2>
+                <p class="subtitle" style="margin:8px 0 0">
+                    RailTicket — Ticket Vending Simulation
+                </p>
+            </div>
+            <span class="status">Payment Simulated</span>
+        </div>
+
+        <div class="ticket" id="ticket">
+            <h2>🚆 RailTicket</h2>
+            <p class="subtitle">Digital Journey Ticket</p>
+
+            <div class="ticket-row">
+                <span>Ticket ID</span>
+                <span id="ticketId"></span>
+            </div>
+            <div class="ticket-row">
+                <span>Source</span>
+                <span id="ticketSource"></span>
+            </div>
+            <div class="ticket-row">
+                <span>Destination</span>
+                <span id="ticketDestination"></span>
+            </div>
+            <div class="ticket-row">
+                <span>Journey Date</span>
+                <span id="ticketDate"></span>
+            </div>
+            <div class="ticket-row">
+                <span>Ticket Type</span>
+                <span id="ticketType"></span>
+            </div>
+            <div class="ticket-row">
+                <span>Passengers</span>
+                <span id="ticketPassengers"></span>
+            </div>
+            <div class="ticket-row">
+                <span>Total Fare</span>
+                <span id="ticketFare"></span>
+            </div>
+            <div class="ticket-row">
+                <span>Generated At</span>
+                <span id="generatedAt"></span>
+            </div>
+
+            <p style="text-align:center;margin-top:22px;font-weight:bold">
+                Thank you for travelling with us!
+            </p>
+            <p style="text-align:center;margin-top:8px;color:#64748b;font-size:13px">
+                Academic simulation only — not a valid railway ticket.
+            </p>
+        </div>
+
+        <div class="ticket-actions no-print">
+            <button class="btn" onclick="window.print()">🖨️ Print Ticket</button>
+            <button class="btn btn-light" onclick="goToBooking()">＋ New Booking</button>
+        </div>
+    </div>
+</section>
+
+<section id="historySection">
+    <div class="card">
+        <h2>📋 My Tickets</h2>
+        <p class="subtitle">Tickets generated in this browser.</p>
+        <div id="historyList"></div>
+        <button class="btn btn-light no-print" onclick="clearHistory()">
+            Clear Ticket History
+        </button>
+    </div>
+</section>
+
+<section id="about" class="card" style="margin-bottom:35px">
+    <h2>About This Project</h2>
+    <p style="color:#64748b;line-height:1.8;margin-top:12px">
+        Ticket Vending Machine Simulation is an academic web project
+        that demonstrates ticket selection, fare calculation,
+        simulated payment, ticket generation and printing using
+        HTML, CSS and JavaScript.
+    </p>
+</section>
+
+</main>
+
+<footer>
+    <div>
+        <h2>🚆 RailTicket</h2>
+        <p>Ticket Vending Machine Simulation</p>
+    </div>
+    <div>
+        <strong>Academic Mini Project</strong>
+        <p>Built with HTML, CSS and JavaScript</p>
+    </div>
+    <div>
+        <p>Home · Booking · My Tickets · About</p>
+        <p>© <span id="year"></span> RailTicket Demo</p>
+    </div>
+</footer>
+
+<script>
+const stations = ["Atpadi", "Sangli", "Miraj", "Kolhapur", "Pune"];
+const stationIndex = {
+    Atpadi: 0,
+    Sangli: 1,
+    Miraj: 2,
+    Kolhapur: 3,
+    Pune: 4
+};
+
+const typeNames = {
+    "1": "Ordinary",
+    "1.5": "Express",
+    "2": "AC Class"
+};
+
+const $ = id => document.getElementById(id);
+
+function updateDestination() {
+    const source = $("source").value;
+    const previous = $("destination").value;
+
+    $("destination").innerHTML = "";
+
+    stations.filter(s => s !== source).forEach(s => {
+        const option = document.createElement("option");
+        option.value = s;
+        option.textContent = s;
+        $("destination").appendChild(option);
+    });
+
+    if (previous && previous !== source && stations.includes(previous)) {
+        $("destination").value = previous;
+    } else {
+        $("destination").selectedIndex = 0;
+    }
+}
+
+function getBooking() {
+    const source = $("source").value;
+    const destination = $("destination").value;
+    const passengers = Number($("passengers").value);
+    const multiplier = Number($("type").value);
+    const distance = Math.abs(
+        stationIndex[source] - stationIndex[destination]
+    );
+    const fare = Math.round(distance * 50 * multiplier * passengers);
+
+    return { source, destination, passengers, multiplier, distance, fare };
+}
+
+function calculateFare() {
+    let count = Number($("passengers").value);
+
+    if (!Number.isFinite(count)) count = 1;
+    count = Math.max(1, Math.min(10, Math.floor(count)));
+    $("passengers").value = count;
+
+    const b = getBooking();
+
+    $("fare").textContent = "₹" + b.fare;
+    $("fareDetails").innerHTML =
+        "Distance: " + b.distance + " station steps<br>" +
+        "Base fare: ₹50 per step<br>" +
+        "Ticket type: " + typeNames[String(b.multiplier)] +
+        "<br>Passengers: " + b.passengers;
+}
+
+function makePayment() {
+    const b = getBooking();
+    const journeyDate = $("date").value;
+
+    if (b.source === b.destination) {
+        alert("Please select different source and destination stations.");
+        return;
+    }
+
+    if (!journeyDate) {
+        alert("Please select your journey date.");
+        return;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const selectedDate = new Date(journeyDate + "T00:00:00");
+
+    if (selectedDate < today) {
+        alert("Journey date cannot be in the past.");
+        return;
+    }
+
+    const confirmed = confirm(
+        "SIMULATED PAYMENT\n\n" +
+        "From: " + b.source + "\n" +
+        "To: " + b.destination + "\n" +
+        "Passengers: " + b.passengers + "\n" +
+        "Total: ₹" + b.fare + "\n\n" +
+        "Press OK to simulate successful payment.\n" +
+        "No real money will be charged."
+    );
+
+    if (!confirmed) {
+        alert("Payment simulation cancelled.");
+        return;
+    }
+
+    const ticket = {
+        id: "TVM" + Date.now().toString().slice(-9),
+        source: b.source,
+        destination: b.destination,
+        date: journeyDate,
+        type: typeNames[String(b.multiplier)],
+        passengers: b.passengers,
+        fare: b.fare,
+        generatedAt: new Date().toLocaleString()
+    };
+
+    // Browser-local ticket history. No server is used.
+    const history = getHistory();
+    history.unshift(ticket);
+
+    try {
+        localStorage.setItem("railTicketHistory", JSON.stringify(history));
+    } catch (error) {
+        alert("Browser storage is unavailable. The ticket will still be shown.");
+    }
+
+    displayTicket(ticket);
+    $("historySection").style.display = "none";
+    $("ticketSection").style.display = "block";
+    $("ticketSection").scrollIntoView({ behavior: "smooth" });
+}
+
+function displayTicket(t) {
+    $("ticketId").textContent = t.id;
+    $("ticketSource").textContent = t.source;
+    $("ticketDestination").textContent = t.destination;
+    $("ticketDate").textContent = t.date;
+    $("ticketType").textContent = t.type;
+    $("ticketPassengers").textContent = t.passengers;
+    $("ticketFare").textContent = "₹" + t.fare;
+    $("generatedAt").textContent = t.generatedAt;
+}
+
+function getHistory() {
+    try {
+        const data = JSON.parse(localStorage.getItem("railTicketHistory") || "[]");
+        return Array.isArray(data) ? data : [];
+    } catch {
+        return [];
+    }
+}
+
+function showHistory() {
+    $("ticketSection").style.display = "none";
+    $("historySection").style.display = "block";
+
+    const history = getHistory();
+    const list = $("historyList");
+    list.innerHTML = "";
+
+    if (!history.length) {
+        list.innerHTML = '<p class="empty">No tickets booked yet. Book a ticket to see it here.</p>';
+    } else {
+        history.forEach(t => {
+            const item = document.createElement("div");
+            item.className = "history-item";
+
+            const title = document.createElement("strong");
+            title.textContent = t.source + " → " + t.destination;
+
+            const details = document.createElement("p");
+            details.textContent =
+                "Ticket ID: " + t.id + " | Date: " + t.date +
+                " | Passengers: " + t.passengers + " | Fare: ₹" + t.fare;
+
+            const view = document.createElement("button");
+            view.className = "btn";
+            view.style.width = "auto";
+            view.textContent = "View Ticket";
+            view.onclick = () => {
+                displayTicket(t);
+                $("historySection").style.display = "none";
+                $("ticketSection").style.display = "block";
+                $("ticketSection").scrollIntoView({ behavior: "smooth" });
+            };
+
+            item.append(title, details, view);
+            list.appendChild(item);
+        });
+    }
+
+    $("historySection").scrollIntoView({ behavior: "smooth" });
+}
+
+function clearHistory() {
+    if (!confirm("Delete all saved ticket history from this browser?")) return;
+
+    localStorage.removeItem("railTicketHistory");
+    showHistory();
+}
+
+function goToBooking() {
+    $("ticketSection").style.display = "none";
+    $("historySection").style.display = "none";
+    $("booking").scrollIntoView({ behavior: "smooth" });
+}
+
+function resetForm() {
+    $("source").value = "Atpadi";
+    $("type").value = "1";
+    $("passengers").value = 1;
+
+    updateDestination();
+    $("date").value = "";
+    calculateFare();
+
+    $("ticketSection").style.display = "none";
+    $("historySection").style.display = "none";
+}
+
+function initialize() {
+    updateDestination();
+    calculateFare();
+
+    // Prevent selection of past journey dates.
+    const now = new Date();
+    const localDate = new Date(
+        now.getTime() - now.getTimezoneOffset() * 60000
+    ).toISOString().slice(0, 10);
+
+    $("date").min = localDate;
+    $("year").textContent = now.getFullYear();
+}
+
+initialize();
+</script>
+
+</body>
+</html>
